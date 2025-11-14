@@ -24,8 +24,8 @@ VERSION_APP = "1.0.0"
 CREATOR_APP = "AMUG"
 
 # Inicializar conexiones
-mongo = MongoDB(MONGO_URI, MONGO_DB)
-elastic = ElasticSearch(ELASTIC_CLOUD_URL, ELASTIC_API_KEY)
+mongo = mongoDB(MONGO_URI, MONGO_DB)
+elastic = Elasticsearch(ELASTIC_CLOUD_URL, ELASTIC_API_KEY)
 
 # ==================== RUTAS ====================
 @app.route('/')
