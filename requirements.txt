@@ -7,4 +7,3 @@ bcrypt # Encriptación de información
 pandas
 numpy
 elasticsearch==8.11.0
-_
