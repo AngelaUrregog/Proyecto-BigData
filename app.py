@@ -51,3 +51,4 @@ if __name__ == '__main__':
         print("✅ ElasticSearch Cloud: Conectado")
     else:
         print("❌ ElasticSearch Cloud: Error de conexión")
+
