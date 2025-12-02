@@ -1,7 +1,5 @@
-from .mongoDB import MongoDB
-from .funciones import Funciones
-from .elastic import ElasticSearch
-from .webScraping import WebScraping
-#from .PLN import PLN
-#__all__ = ['MongoDB', 'Funciones', 'ElasticSearch', 'WebScraping']
-__all__ = ['MongoDB', 'Funciones', 'ElasticSearch', 'WebScraping', 'PLN']
+from Helpers.mongoDB import MongoDB
+from Helpers.elastic import ElasticSearch
+from Helpers.funciones import Funciones
+from Helpers.webScraping import WebScraping
+from Helpers.PLN import PLN
