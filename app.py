@@ -87,7 +87,7 @@ def buscar_elastic():
 =======
                         }
 >>>>>>> origin/main
-                    }
+                    
         aggs= {
             "cuentos_por_mes": {
                 "date_histogram": {
