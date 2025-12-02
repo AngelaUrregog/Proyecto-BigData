@@ -1,4 +1,4 @@
-from Elasticsearch import Elasticsearch
+from elasticsearch import Elasticsearch
 from typing import Dict, List, Optional, Any
 import json
 
@@ -170,7 +170,7 @@ class ElasticSearch:
         Returns:
             Diccionario con estadísticas de indexación
         """
-        from Elasticsearch.helpers import bulk
+        from elasticsearch.helpers import bulk
         
         try:
             # Preparar acciones para bulk
