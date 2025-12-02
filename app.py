@@ -3,7 +3,10 @@ from dotenv import load_dotenv
 import os
 from datetime import datetime
 from werkzeug.utils import secure_filename
-from Helpers import MongoDB, ElasticSearch, Funciones, WebScraping
+from Helpers.mongoDB import MongoDB
+from Helpers.elastic import ElasticSearch
+from Helpers.funciones import Funciones
+from Helpers.webScraping import WebScraping
 
 # Cargar variables de entorno
 load_dotenv()
