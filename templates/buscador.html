@@ -229,13 +229,8 @@
             // Mostrar aggregations
             mostrarAggregations(data.aggs || {});
             
-<<<<<<< HEAD
             // Mostrar hits-resultados
             mostrarHits(data.resultados || []);
-=======
-            // Mostrar hits
-            mostrarHits(data.hits || []);
->>>>>>> origin/main
             
             // Mostrar div de resultados
             document.getElementById('divResultados').style.display = 'block';
@@ -284,7 +279,6 @@
         }
 
         // Función para mostrar hits
-<<<<<<< HEAD
         function mostrarHits(resultados) {
             console.log(resultados);
             const tablaResultados = document.getElementById('tablaResultados');
@@ -298,20 +292,6 @@
             resultados.forEach((resultado, index) => {
                 const row = document.createElement('tr');
                 const source = resultado._source || {};
-=======
-        function mostrarHits(hits) {
-            const tablaResultados = document.getElementById('tablaResultados');
-            tablaResultados.innerHTML = '';
-            
-            if (hits.length === 0) {
-                tablaResultados.innerHTML = '<tr><td colspan="5" class="text-center">No se encontraron resultados</td></tr>';
-                return;
-            }
-            
-            hits.forEach((hit, index) => {
-                const row = document.createElement('tr');
-                const source = hit._source || {};
->>>>>>> origin/main
                 
                 // Crear vista del contenido (primeros 200 caracteres)
                 let contenidoVista = '';
