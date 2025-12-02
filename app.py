@@ -27,7 +27,7 @@ CREATOR_APP = "AMUG"
 
 # Inicializar conexiones
 mongo = MongoDB(MONGO_URI, MONGO_DB)
-elastic = elastic_helpers.ElasticSearch(ELASTIC_CLOUD_URL, ELASTIC_API_KEY)
+elastic = ElasticSearch(ELASTIC_CLOUD_URL, ELASTIC_API_KEY)
 
 # ==================== RUTAS ====================
 
