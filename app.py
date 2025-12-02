@@ -602,20 +602,24 @@ def admin():
 if __name__ == '__main__':
     # Crear carpetas necesarias
     Funciones.crear_carpeta('static/uploads')
-
+    
     # Verificar conexiones
-    print("\n" + "=" * 50)
+    print("\n" + "="*50)
     print("VERIFICANDO CONEXIONES")
 
     if mongo.test_connection():
         print("✅ MongoDB Atlas: Conectado")
     else:
         print("❌ MongoDB Atlas: Error de conexión")
-
+    
     if elastic.test_connection():
         print("✅ ElasticSearch Cloud: Conectado")
     else:
         print("❌ ElasticSearch Cloud: Error de conexión")
 
-    # Ejecutar la aplicación (localmente para pruebas)
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    # Obtener el puerto que Render espera
+    import os
+    port = int(os.environ.get("PORT", 5000))
+
+    # Ejecutar la aplicación
+    app.run(host='0.0.0.0', port=port, debug=False)
