@@ -43,8 +43,8 @@ class PLN:
         self.model_embeddings = None
         self.stopwords_es = None
         
-        if cargar_modelos:
-            self._cargar_modelos()
+        #if cargar_modelos:
+            #self._cargar_modelos()
     
     def _cargar_modelos(self):
         """Carga los modelos de PLN necesarios"""
