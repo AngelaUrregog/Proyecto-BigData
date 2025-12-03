@@ -183,7 +183,7 @@ def crear_usuario():
         permisos_usuario = data.get('permisos', {})
 
         if not usuario or not password:
-            return jsonify({'success': False, 'error': 'Usuario y password son requeridos'}), 400
+            return jsonify({'success': False, 'error': 'Usuario y contraseña son requeridos'}), 400
 
         # Verificar si el usuario ya existe
         usuario_existente = mongo.obtener_usuario(usuario, MONGO_COLECCION)
