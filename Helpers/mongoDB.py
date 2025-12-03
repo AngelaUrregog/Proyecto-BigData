@@ -24,8 +24,8 @@ class MongoDB:
             #password_md5 = hashlib.md5(password.encode()).hexdigest()
             password_md5 =password  # Deshabilitado MD5 para pruebas
             user = self.db[coleccion].find_one({
-                'Usuario': usuario,
-                'Contaseña': password_md5
+                'usuario': usuario,
+                'contraseña': password_md5
             })
             return user
         except Exception as e:
