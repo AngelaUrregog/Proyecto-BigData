@@ -23,26 +23,26 @@
         </div>
     </header>
     <hr>
-    <div class="container mt-2">
-        <h1 class="text-center mb-4">Panel de Administración</h1>
-        <p class="text-center mb-4">Bienvenido al panel de administración. Aquí puedes gestionar las bases de datos MongoDB y las configuraciones de ElasticSearch.</p>
-        
-        {% if permisos and permisos.get('admin_usuarios') %}
-            <a href="/gestor_usuarios" class="btn btn-primary">Gestionar Usuarios</a>
-        {% else %}
-            <div class="alert alert-warning">No tiene permiso para gestionar usuarios (admin_usuarios)</div>
+    <div class="mt-3">
+        {# Botón Gestionar Usuarios: solo si tiene permiso #}
+        {% if permisos.admin_usuarios %}
+            <a href="{{ url_for('gestor_usuarios') }}" class="btn btn-primary me-2">
+                Gestionar Usuarios
+            </a>
         {% endif %}
-        
-        {% if permisos and permisos.get('admin_elastic') %}
-            <a href="/gestor_elastic" class="btn btn-primary">Gestionar Elastic</a>
-        {% else %}
-            <div class="alert alert-warning">No tiene permiso para gestionar Elastic (admin_elastic)</div>
-        {% endif %}
-        
-        {% if permisos and permisos.get('admin_data_elastic') %}
-            <a href="/cargar_doc_elastic" class="btn btn-primary">Cargar archivos a Elastic</a>
-        {% else %}
-            <div class="alert alert-warning">No tiene permiso para cargar archivos a Elastic (admin_data_elastic)</div>
+
+        {# Botón Gestionar Elastic: solo si tiene permiso #}
+        {% if permisos.admin_elastic %}
+            <a href="{{ url_for('gestor_elastic') }}" class="btn btn-primary me-2">
+                Gestionar Elastic
+             </a>
+         {% endif %}
+
+        {# Botón Cargar archivos a Elastic: solo si tiene permiso #}
+        {% if permisos.admin_data_elastic %}
+            <a href="{{ url_for('cargar_doc_elastic') }}" class="btn btn-primary">
+                Cargar archivos a Elastic
+             </a>
         {% endif %}
     </div>
     <footer class="text-center">
