@@ -1,294 +1,29 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscador </title>
-
-    <!-- Bootstrap + iconos -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-          crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
-          rel="stylesheet">
-
-    <!-- Tu CSS base -->
-    <link href="{{ url_for('static', filename='css/landingPage.css') }}" rel="stylesheet">
-
-    <style>
-        body {
-            background-image: url("/static/images/bg_bigdata.jpg");
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-          }
-
-        .main-wrapper {
-            flex: 1 0 auto;
-        }
-
-        .header {
-            height: 120px;
-            display: flex;
-            align-items: center;
-            background: linear-gradient(90deg, #4b0082 0%, #8b00ff 50%, #ff6bd5 100%);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-                }
-
-        .header .nav-link {
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .header .nav-link.active,
-        .header .nav-link:hover {
-            color: #ffffff;
-            font-weight: 500;
-        }
-
-        .search-card {
-            border: none;
-            border-radius: 1rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, .08);
-            overflow: hidden;
-        }
-
-        .search-card .card-header {
-            background: linear-gradient(135deg, #9abd73, #c8e2a7);
-            color: #fff;
-        }
-
-        .resultados-container {
-            margin-top: 1.5rem;
-        }
-
-        .aggs-list {
-            background-color: #ffffff;
-            border-radius: 0.75rem;
-            padding: 1rem;
-            border: 1px solid #e0e0e0;
-            max-height: 600px;
-            overflow-y: auto;
-        }
-
-        .aggs-item {
-            margin-bottom: 1rem;
-        }
-
-        .aggs-item h6 {
-            color: #495057;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .aggs-chip {
-            display: inline-flex;
-            align-items: center;
-            border-radius: 999px;
-            padding: 0.25rem 0.7rem;
-            background-color: #f1f3f5;
-            font-size: 0.8rem;
-            margin: 0.15rem;
-        }
-
-        .aggs-chip .badge {
-            margin-left: 0.35rem;
-        }
-
-        .tabla-resultados {
-            max-height: 600px;
-            overflow-y: auto;
-        }
-
-        .json-view {
-            background-color: #f8f9fa;
-            border-radius: 0.5rem;
-            padding: 0.5rem 0.75rem;
-            font-family: 'Courier New', monospace;
-            font-size: 0.75rem;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            max-height: 180px;
-            overflow-y: auto;
-        }
-
-        .badge-index {
-            font-size: 0.7rem;
-        }
-
-        footer {
-            flex-shrink: 0;
-            padding: 1rem 0;
-            background-color: #f8f9fa;
-            border-top: 1px solid #e5e5e5;
-        }
-    </style>
-</head>
-<body>
-<div class="main-wrapper">
-
-    <!-- HEADER -->
-    <header class="header">
-        <div class="container">
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="d-flex align-items-center gap-2">
-                    <i class="bi bi-database-fill-gear fs-3"></i>
-                <div>
-                    <h1 class="h5 mb-0 fw-bold" style="color: white; font-family: 'Poppins', sans-serif;">
-                     Proyecto Final BigData
-                    </h1> <small class="opacity-75" style="color: white; font-size: 18px; font-family: 'Poppins', sans-serif;">
-                        Buscador de documentos en Elasticsearch
-                    </small>
-                </div>
-                </div>
-                <nav>
-                    <ul class="nav">
-                        <li class="nav-item"><a class="nav-link" href="/"><i class="bi bi-house-door"></i> Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="/buscador"><i class="bi bi-search"></i> Buscador</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/about"><i class="bi bi-info-circle"></i> Acerca de</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/login"><i class="bi bi-box-arrow-in-right"></i> Ingresar</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
-
-    <!-- CONTENIDO -->
-    <div class="container mt-4 mb-5">
-
-        <!-- Tarjeta de búsqueda -->
-        <div class="card search-card">
-            <div class="card-header d-flex align-items-center justify-content-between">
-                <div>
-                    <h5 class="mb-0"><i class="bi bi-search-heart me-2"></i>Buscador de documentos</h5>
-                    <small class="opacity-75">Escribe palabras clave para buscar dentro del índice de Elasticsearch</small>
-                </div>
-                <span class="badge bg-light text-dark d-none d-md-inline">Índice: <strong>proy_amug</strong></span>
-            </div>
-            <div class="card-body">
-                <form id="formBuscar" onsubmit="buscar(event)">
-                    <div class="row g-3 align-items-end">
-                        <div class="col-md-10">
-                            <label for="textoBuscar" class="form-label fw-semibold">Texto a buscar</label>
-                            <input type="text"
-                                   class="form-control form-control-lg"
-                                   id="textoBuscar"
-                                   name="texto"
-                                   placeholder="Ejemplo: pandemia, resolución, decreto, etc."
-                                   required>
-                        </div>
-                        <div class="col-md-2">
-                            <button type="submit" class="btn btn-primary btn-lg w-100 mt-3 mt-md-0">
-                                <i class="bi bi-search"></i> Buscar
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <!-- Mensaje de carga -->
-        <div id="div_cargando" class="text-center mt-4" style="display: none;">
-            <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Buscando...</span>
-            </div>
-            <p class="mt-2 text-muted">Buscando documentos... Por favor espere.</p>
-        </div>
-
-        <!-- Resultados -->
-        <div id="divResultados" class="resultados-container" style="display: none;">
-            <div class="card border-0 shadow-sm">
-                <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">
-                        <i class="bi bi-list-check me-2"></i>
-                        Resultados de la búsqueda
-                    </h5>
-                    <span class="badge bg-primary-subtle text-primary">
-                        Total encontrado: <span id="totalResultados" class="fw-bold">0</span>
-                    </span>
-                </div>
-                <div class="card-body border-top">
-                    <div class="row g-3">
-                        <!-- Columna 1: Aggregations / filtros -->
-                        <div class="col-lg-3">
-                            <div class="aggs-list">
-                                <h6 class="mb-2 text-uppercase small text-muted">
-                                    <i class="bi bi-funnel me-1"></i>Filtros
-                                </h6>
-                                <div id="divAggregations" class="mt-2">
-                                    <!-- Filtros dinámicos -->
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Columna 2: Tabla de resultados -->
-                        <div class="col-lg-9">
-                            <div class="tabla-resultados">
-                                <table class="table table-hover align-middle">
-                                    <thead class="table-light">
-                                    <tr>
-                                        <th style="width: 5%;">#</th>
-                                        <th style="width: 10%;">ID</th>
-                                        <th style="width: 10%;">Score</th>
-                                        <th style="width: 15%;">Índice</th>
-                                        <th style="width: 60%;">Contenido</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody id="tablaResultados">
-                                    <!-- Resultados dinámicos -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Mensaje de error -->
-        <div id="divError" class="alert alert-danger mt-4 d-flex align-items-center" style="display: none;" role="alert">
-            <i class="bi bi-exclamation-octagon-fill me-2"></i>
-            <div>
-                <strong>Error:</strong> <span id="mensajeError"></span>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- FOOTER -->
-<footer class="text-center">
-    <p class="mb-0">Creado por {{ creador }}</p>
-    <p class="mb-0" id="current-year"></p>
-    <p class="mb-0" id="version_app">{{ version }}</p>
-</footer>
-
-<!-- JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous"></script>
-
 <script>
-    // Año en el footer
-    document.getElementById('current-year').textContent = new Date().getFullYear();
+    // Año en el footer (si lo tienes)
+    const yearEl = document.getElementById('current-year');
+    if (yearEl) {
+        yearEl.textContent = new Date().getFullYear();
+    }
 
-    // Última búsqueda para el modal de detalle
+    // Variable global para poder ver el detalle en el modal
     let ultimaBusqueda = [];
 
-    // ---------- FUNCIÓN PRINCIPAL DE BÚSQUEDA ----------
+    // ------------ FUNCIÓN PRINCIPAL DE BÚSQUEDA ------------
     function buscar(event) {
         event.preventDefault();
 
         const textoBuscar = document.getElementById('textoBuscar').value.trim();
-
         if (!textoBuscar) {
-            alert('Por favor, ingrese un texto para buscar');
+            alert('Por favor, ingresa un texto para buscar');
             return;
         }
 
-        // Reset de UI
+        // Ocultar resultados y error anteriores
         document.getElementById('divResultados').style.display = 'none';
         document.getElementById('divError').style.display = 'none';
+        document.getElementById('mensajeError').textContent = '';
+
+        // Mostrar spinner
         document.getElementById('div_cargando').style.display = 'block';
 
         fetch('/buscar-elastic', {
@@ -296,10 +31,7 @@
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                texto: textoBuscar,
-                campo: '_all'   // si luego quieres, aquí puedes cambiar de campo
-            })
+            body: JSON.stringify({ texto: textoBuscar })
         })
         .then(response => response.json())
         .then(data => {
@@ -308,111 +40,97 @@
             if (data.success) {
                 mostrarResultados(data);
             } else {
-                mostrarError(data.error || 'Error desconocido');
+                mostrarError(data.error || 'Error desconocido en la búsqueda');
             }
         })
         .catch(error => {
-            console.error('Error:', error);
+            console.error('Error en la petición /buscar-elastic:', error);
             document.getElementById('div_cargando').style.display = 'none';
             mostrarError('Error al realizar la búsqueda');
         });
     }
 
-    // ---------- PINTAR RESULTADOS ----------
+    // ------------ MOSTRAR RESULTADOS ------------
     function mostrarResultados(data) {
-        const resultados = data.resultados || data.hits || [];
-        const total = data.total || resultados.length || 0;
+        // Asegurarse de ocultar cualquier error anterior
+        document.getElementById('divError').style.display = 'none';
+        document.getElementById('mensajeError').textContent = '';
 
-        document.getElementById('totalResultados').textContent = total;
+        // Total encontrados
+        document.getElementById('totalResultados').textContent = data.total || 0;
+
+        // Aggregations (filtros)
         mostrarAggregations(data.aggs || {});
-        mostrarHits(resultados);
+
+        // Hits / resultados
+        mostrarHits(data.resultados || []);
+
+        // Mostrar contenedor de resultados
         document.getElementById('divResultados').style.display = 'block';
     }
 
-    // ---------- AGGREGATIONS / FILTROS ----------
+    // ------------ AGGREGATIONS (FILTROS) ------------
     function mostrarAggregations(aggs) {
         const divAggregations = document.getElementById('divAggregations');
+        if (!divAggregations) return;
+
         divAggregations.innerHTML = '';
 
         if (!aggs || Object.keys(aggs).length === 0) {
             divAggregations.innerHTML =
-                '<p class="text-muted small mb-0">No hay filtros disponibles para esta búsqueda.</p>';
+                '<p class="text-muted mb-0">No hay filtros disponibles para esta búsqueda.</p>';
             return;
         }
 
-        // Cada clave del objeto aggs es una agregación
-        Object.entries(aggs).forEach(([nombreAgg, agg]) => {
-            const cont = document.createElement('div');
-            cont.className = 'aggs-item';
-
-            const titulo = document.createElement('h6');
-            titulo.textContent = nombreAgg;
-            cont.appendChild(titulo);
-
-            if (agg.buckets && Array.isArray(agg.buckets) && agg.buckets.length > 0) {
-                agg.buckets.forEach(b => {
-                    const chip = document.createElement('span');
-                    chip.className = 'aggs-chip';
-                    chip.innerHTML = `
-                        <span>${b.key}</span>
-                        <span class="badge bg-primary bg-opacity-75">${b.doc_count}</span>
-                    `;
-                    cont.appendChild(chip);
-                });
-            } else {
-                const p = document.createElement('p');
-                p.className = 'text-muted small mb-0';
-                p.textContent = 'Sin datos';
-                cont.appendChild(p);
-            }
-
-            divAggregations.appendChild(cont);
-        });
+        // Si en algún momento agregas aggregations, aquí las pintas.
+        // Por ahora, simplemente mostramos un mensajito.
+        divAggregations.innerHTML =
+            '<p class="text-muted mb-0">Se recibieron aggregations, pero aún no las estamos mostrando en detalle.</p>';
     }
 
-    // ---------- TABLA DE HITS ----------
+    // ------------ MOSTRAR TABLA DE HITS ------------
     function mostrarHits(hits) {
-        ultimaBusqueda = hits || [];
-
         const tablaResultados = document.getElementById('tablaResultados');
         tablaResultados.innerHTML = '';
 
-        if (!hits || hits.length === 0) {
+        // Guardamos para el modal "Ver completo"
+        ultimaBusqueda = hits;
+
+        if (!hits.length) {
             tablaResultados.innerHTML =
-                '<tr><td colspan="5" class="text-center text-muted py-4">No se encontraron resultados</td></tr>';
+                '<tr><td colspan="5" class="text-center">No se encontraron resultados</td></tr>';
             return;
         }
 
         hits.forEach((hit, index) => {
+            const row = document.createElement('tr');
             const source = hit._source || {};
 
-            // Campo de texto a mostrar (ajusta los nombres si tus documentos usan otros campos)
-            let contenido =
-                source.contenido ||
-                source.texto ||
-                source.contenido_texto ||
-                JSON.stringify(source, null, 2);
-
-            let contenidoVista = contenido;
-            if (contenidoVista.length > 220) {
-                contenidoVista = contenidoVista.substring(0, 220) + '...';
+            // Vista corta del contenido
+            let contenidoVista = '';
+            if (source.contenido) {
+                contenidoVista = source.contenido.substring(0, 250);
+                if (source.contenido.length > 250) contenidoVista += '...';
+            } else if (source.texto) {
+                contenidoVista = source.texto.substring(0, 250);
+                if (source.texto.length > 250) contenidoVista += '...';
+            } else {
+                const sourceStr = JSON.stringify(source, null, 2);
+                contenidoVista = sourceStr.substring(0, 250);
+                if (sourceStr.length > 250) contenidoVista += '...';
             }
 
-            const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${index + 1}</td>
-                <td><code>${hit._id || ''}</code></td>
+                <td>${hit._id || ''}</td>
                 <td>${hit._score ? hit._score.toFixed(4) : 'N/A'}</td>
-                <td>
-                    <span class="badge bg-secondary-subtle text-secondary badge-index">
-                        ${hit._index || ''}
-                    </span>
-                </td>
+                <td><small>${hit._index || ''}</small></td>
                 <td>
                     <div class="json-view">${contenidoVista}</div>
-                    <button class="btn btn-sm btn-outline-primary mt-2"
+                    <button class="btn btn-sm btn-link mt-1"
                             onclick="mostrarDetalle(${index})"
-                            data-bs-toggle="modal" data-bs-target="#modalDetalle">
+                            data-bs-toggle="modal"
+                            data-bs-target="#modalDetalle">
                         Ver completo
                     </button>
                 </td>
@@ -421,42 +139,22 @@
         });
     }
 
-    // ---------- ERRORES ----------
+    // ------------ MOSTRAR ERROR ------------
     function mostrarError(mensaje) {
-        document.getElementById('mensajeError').textContent = mensaje;
-        document.getElementById('divError').style.display = 'block';
+        const divError = document.getElementById('divError');
+        const spanMensaje = document.getElementById('mensajeError');
+
+        if (spanMensaje) spanMensaje.textContent = mensaje || 'Error desconocido';
+        if (divError) divError.style.display = 'flex'; // o 'block' según tu diseño
     }
 
-    // ---------- DETALLE EN MODAL ----------
+    // ------------ DETALLE COMPLETO EN EL MODAL ------------
     function mostrarDetalle(index) {
-        if (!ultimaBusqueda[index]) return;
+        const modalBody = document.getElementById('modalDetalleBody');
+        if (!modalBody || !ultimaBusqueda[index]) return;
 
         const source = ultimaBusqueda[index]._source || {};
-        const modalBody = document.getElementById('modalDetalleBody');
         modalBody.innerHTML =
-            '<pre class="json-view" style="max-height: 500px; overflow-y: auto;">' +
-            JSON.stringify(source, null, 2) +
-            '</pre>';
+            `<pre class="json-view" style="max-height: 500px; overflow-y: auto;">${JSON.stringify(source, null, 2)}</pre>`;
     }
 </script>
-
-<!-- Modal detalle -->
-<div class="modal fade" id="modalDetalle" tabindex="-1" aria-labelledby="modalDetalleLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalDetalleLabel">Detalle del documento</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-            </div>
-            <div class="modal-body" id="modalDetalleBody">
-                <!-- Contenido dinámico -->
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-</body>
-</html>
