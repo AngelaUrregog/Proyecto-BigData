@@ -78,7 +78,7 @@
     min-height: calc(100vh - 80px);
     display: flex;
     align-items: center;
-    justify-content: flex-end;   /* empuja el contenido hacia la derecha */
+    justify-content: center;   /* empuja el contenido hacia la derecha */
     padding: 3rem 6vw;
 }
 
