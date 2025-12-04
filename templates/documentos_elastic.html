@@ -195,12 +195,12 @@
                     select.innerHTML = '';
 
                     const MI_INDEX = 'proy_amug'; 
-                    const indice = data.find(i => i.nombre === MI_INDEX);
+                    const indice = data.find(i => i.index === MI_INDEX);
 
                     if (indice) {
                         const option = document.createElement('option');
-                        option.value = indice.nombre;
-                        option.textContent = `${indice.nombre} (${indice.total_documentos} docs)`;
+                        option.value = indice.index;
+                        option.textContent = `${indice.index} (${indice.total_documentos} docs)`;
                         select.appendChild(option);
                     } else {
         

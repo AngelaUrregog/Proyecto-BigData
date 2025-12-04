@@ -246,38 +246,6 @@
                 return;
             }
             
-            // Procesar cuentos_por_mes
-            if (aggs.cuentos_por_mes && aggs.cuentos_por_mes.buckets) {
-                const divMes = document.createElement('div');
-                divMes.className = 'aggs-item';
-                divMes.innerHTML = '<h6>Cuentos por Mes</h6><ul id="listCuentosPorMes"></ul>';
-                divAggregations.appendChild(divMes);
-                
-                const listMes = document.getElementById('listCuentosPorMes');
-                aggs.cuentos_por_mes.buckets.forEach(bucket => {
-                    const li = document.createElement('li');
-                    const fecha = new Date(bucket.key_as_string || bucket.key).toLocaleDateString('es-ES', { year: 'numeric', month: 'long' });
-                    li.innerHTML = `${fecha} <span class="badge bg-primary">${bucket.doc_count}</span>`;
-                    listMes.appendChild(li);
-                });
-            }
-            
-            // Procesar cuentos_por_autor
-            if (aggs.cuentos_por_autor && aggs.cuentos_por_autor.buckets) {
-                const divAutor = document.createElement('div');
-                divAutor.className = 'aggs-item';
-                divAutor.innerHTML = '<h6>Cuentos por Autor</h6><ul id="listCuentosPorAutor"></ul>';
-                divAggregations.appendChild(divAutor);
-                
-                const listAutor = document.getElementById('listCuentosPorAutor');
-                aggs.cuentos_por_autor.buckets.forEach(bucket => {
-                    const li = document.createElement('li');
-                    li.innerHTML = `${bucket.key} <span class="badge bg-success">${bucket.doc_count}</span>`;
-                    listAutor.appendChild(li);
-                });
-            }
-        }
-
         // Función para mostrar hits
         function mostrarHits(resultados) {
             console.log(resultados);

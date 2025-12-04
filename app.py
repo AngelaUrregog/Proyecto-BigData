@@ -75,22 +75,6 @@ def buscar_elastic():
             }
         }
 
-        # Aggregations / filtros
-        aggs = {
-            "cuentos_por_mes": {
-                "date_histogram": {
-                    "field": "fecha_creacion",
-                    "calendar_interval": "month"
-                }
-            },
-            "cuentos_por_autor": {
-                "terms": {
-                    "field": "autor",
-                    "size": 10
-                }
-            }
-        }
-
         # Ejecutar búsqueda en Elastic
         resultado = elastic.buscar(
             index=ELASTIC_INDEX_DEFAULT,
