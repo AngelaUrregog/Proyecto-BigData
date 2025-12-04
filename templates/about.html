@@ -3,132 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acerca de - BigData-MiProyecto</title>
+    <title>Acerca de </title>
 
-    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-    <!-- Tu css general (no lo vamos a tocar) -->
+
     <link href="{{ url_for('static', filename='css/landingPage.css') }}" rel="stylesheet">
 
-    <!-- ESTILOS SOLO PARA ESTA PÁGINA -->
     <style>
-        /* Fondo con la imagen */
-        body {
-            min-height: 100vh;
+
+        body.about-body {
             margin: 0;
-            background: url("{{ url_for('static', filename='Images/big-data-1086802_1280.jpg') }}")
-                        center center / cover fixed no-repeat;
+            min-height: 100vh;
+            background-image: url("{{ url_for('static', filename='Images/big-data-1086802_1280.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
         }
 
-        /* Banner morado SOLO para esta página */
+        /* Banner morado */
         .header {
-            height: 90px;
+            height: 80px;
             display: flex;
             align-items: center;
             background: linear-gradient(90deg, #4b0082 0%, #8b00ff 50%, #ff6bd5 100%);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 20;
         }
 
-        .header-title {
-            color: #ffffff;
-            font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            font-size: 1.6rem;
+        .header .navbar-brand {
             font-weight: 700;
+            color: #ffffff;
+            font-size: 1.4rem;
+            text-decoration: none;
         }
 
         .header .nav-link {
-            color: #ffffff;
+            color: rgba(255, 255, 255, 0.85);
             font-weight: 500;
-            margin-left: 1rem;
         }
 
-        .header .nav-link.active,
-        .header .nav-link:hover {
-            color: #ffe8ff;
+        .header .nav-link:hover,
+        .header .nav-link.active {
+            color: #ffffff;
         }
 
-        /* Contenedor principal centrado con recuadro blanco */
-        main.main-wrapper {
-            min-height: 100vh;
-            padding-top: 110px;  /* para que no lo tape el header */
-            padding-bottom: 40px;
+        /* Contenedor central con el recuadro blanco */
+        .about-wrapper {
+            min-height: calc(100vh - 80px); /* altura total menos el header */
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+            padding: 3rem 1rem;
         }
 
         .about-card {
-            max-width: 800px;
-            background-color: rgba(255, 255, 255, 0.92);
-            border-radius: 18px;
+            max-width: 900px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 1.5rem;
+            padding: 3rem 2rem;
             box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
-            backdrop-filter: blur(6px);
+            text-align: center;
         }
 
         .profile-img {
             width: 140px;
             height: 140px;
             border-radius: 50%;
-            object-fit: cover;
             border: 4px solid #8b00ff;
-            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.8);
+            object-fit: cover;
             margin-bottom: 1rem;
+        }
+
+        footer {
+            color: #ffffff;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+            padding-bottom: 1rem;
         }
     </style>
 </head>
-<body>
 
-    <!-- BANNER MORADO (solo aquí) -->
+<body class="about-body">
+    <!-- Banner superior -->
     <header class="header">
-        <div class="container d-flex justify-content-between align-items-center">
-            <h1 class="header-title mb-0">BigData-MiProyecto</h1>
-            <nav>
-                <ul class="nav">
-                    <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/buscador">Buscador</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="/about"><b>Acerca de</b></a></li>
-                    <li class="nav-item"><a class="nav-link" href="/login">Ingresar</a></li>
-                </ul>
-            </nav>
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-database-fill-gear fs-3"></i>
+                <div>
+                    <h1 class="h5 mb-0 fw-bold" style="color: white; font-family: 'Poppins', sans-serif;">
+                     Proyecto Final BigData
+                    </h1> <small class="opacity-75" style="color: white; font-size: 18px; font-family: 'Poppins', sans-serif;">
+                        Acerca de:
+                    </small>
+                </div>
+                </div>
+                <nav>
+                    <ul class="nav">
+                        <li class="nav-item"><a class="nav-link" href="/"><i class="bi bi-house-door"></i> Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="/buscador"><i class="bi bi-search"></i> Buscador</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/about"><i class="bi bi-info-circle"></i> Acerca de</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/login"><i class="bi bi-box-arrow-in-right"></i> Ingresar</a></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </header>
 
-    <!-- CONTENIDO CENTRADO EN RECUADRO BLANCO -->
-    <main class="main-wrapper">
-        <div class="container">
-            <div class="about-card mx-auto p-4 p-md-5 text-center">
-                <h1 class="mb-3">BigData-MiProyecto</h1>
-                <h3 class="mb-4">Descripción del Proyecto</h3>
-                <p class="mb-4">
-                    Este proyecto es una aplicación web desarrollada para la gestión y análisis de datos utilizando
-                    MongoDB y Elasticsearch. Permite a los usuarios explorar bases de datos, visualizar colecciones y
-                    realizar consultas avanzadas sobre grandes volúmenes de información.
-                </p>
+    <!-- Recuadro blanco centrado -->
+    <main class="about-wrapper">
+        <div class="about-card">
+            <h1 class="mb-3 fw-bold">BigData-MiProyecto</h1>
+            <h3 class="mb-4" style="color:#6c2ad4;">Proyecto</h3>
 
-                <img src="{{ url_for('static', filename='images/myAvatar.png') }}" alt="Foto del creador" class="profile-img">
+            <p class="mb-3">
+                Este proyecto es una aplicación web de búsqueda y gestion de usuarios, desarrollada como trabajo final de la matria Big Data.
+                Integra MongoDB y Elasticsearch para almacenar, indexar y consultar grandes volúmenes de documentos, además de gestionar usuarios y sus credenciales dentro de la plataforma.
+                Permite cargar datos desde archivos o web scraping y explorarlos mediante un buscador especializado. 
+                Su objetivo es mostrar, de forma práctica, cómo las tecnologías de Big Data pueden apoyar procesos reales de consulta y toma de decisiones.
+            </p>
 
-                <h4 class="mb-1">XYZ</h4>
-                <p class="mb-0">Estudiante de Maestría en Analítica de Datos</p>
-                <p class="mb-3">Universidad Central</p>
+            <!-- Avatar -->
+            <img src="{{ url_for('static', filename='images/myAvatar.png') }}"
+                 alt="Foto del creador" class="profile-img">
 
-                <div class="d-flex justify-content-center gap-3 mt-3">
-                    <a href="https://github.com/AngelaUrregog/Proyecto-BigData" target="_blank" class="btn btn-primary">
-                        GitHub
-                    </a>
-                    <a href="https://www.ucentral.edu.co/" target="_blank" class="btn btn-success">
-                        Universidad Central
-                    </a>
-                </div>
+            <h4 class="mb-1">Angela Urrego Gomez</h4>
+            <p class="mb-0">Estudiante de Maestría en Analítica de Datos</p>
+            <p class="mb-3">Universidad Central</p>
+
+            <!-- Botones -->
+            <div class="d-flex justify-content-center gap-3 mt-3">
+                <a href="https://github.com/AngelaUrregog/Proyecto-BigData"
+                   target="_blank" class="btn btn-primary px-4">
+                    GitHub
+                </a>
+                <a href="https://www.ucentral.edu.co/"
+                   target="_blank" class="btn btn-success px-4">
+                    Universidad Central
+                </a>
             </div>
         </div>
     </main>
 
-    <footer class="text-center text-white mt-3 mb-3">
+    <footer class="text-center mt-4">
         <p class="mb-0">Autor: {{ creador }}</p>
         <p class="mb-0" id="current-year"></p>
         <p class="mb-0" id="version_app">{{ version }}</p>
