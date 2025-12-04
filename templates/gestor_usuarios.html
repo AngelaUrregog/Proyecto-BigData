@@ -177,7 +177,7 @@
         function cargarUsuarios() {
             document.getElementById('div_cargando').style.display = 'block';
             
-           // fetch('/listar-usuarios')
+            fetch('/listar-usuarios')
                 .then(response => response.json())
                 .then(data => {
                     const tablaUsuarios = document.getElementById('tablaUsuarios');
@@ -297,7 +297,7 @@
         // Función para editar usuario
         function editarUsuario(usuario) {
             // Buscar datos del usuario
-            //fetch('/listar-usuarios')
+            fetch('/listar-usuarios')
                 .then(response => response.json())
                 .then(data => {
                     const usuarioData = data.find(u => u.usuario === usuario);
