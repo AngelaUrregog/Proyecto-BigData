@@ -4,28 +4,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ingresar - BigData-MiProyecto</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+          crossorigin="anonymous">
     <link href="{{ url_for('static', filename='css/landingPage.css') }}" rel="stylesheet">
-    
+
+    <!-- Estilos SOLO para esta página (banner morado + padding del contenido) -->
+    <style>
+        .header {
+            height: 90px;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(90deg, #4b0082 0%, #8b00ff 50%, #ff6bd5 100%);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 20;
+        }
+
+        .header-title {
+            color: #ffffff;
+            font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .header .nav-link {
+            color: #ffffff;
+            font-weight: 500;
+            margin-left: 1rem;
+        }
+
+        .header .nav-link.active,
+        .header .nav-link:hover {
+            color: #ffe8ff;
+        }
+
+        /* Para que el formulario no quede oculto detrás del header fijo */
+        .login-wrapper {
+            padding-top: 110px;
+            padding-bottom: 40px;
+        }
+    </style>
 </head>
 <body>
+    <!-- Banner morado -->
     <header class="header">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
-                <h1 class="h3 mb-0">BigData-MiProyecto</h1>
+                <h1 class="h3 mb-0 header-title">BigData-MiProyecto</h1>
                 <nav>
                     <ul class="nav">
                         <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
                         <li class="nav-item"><a class="nav-link" href="/about">Acerca de</a></li>
                         <li class="nav-item"><a class="nav-link" href="/buscador">Buscador</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="/login"><b>Ingresar</b></a></li>                        
+                        <li class="nav-item"><a class="nav-link active" href="/login"><b>Ingresar</b></a></li>
                     </ul>
                 </nav>
             </div>
         </div>
     </header>
 
-    <div class="container">
+    <!-- Contenido -->
+    <div class="container login-wrapper">
         <div class="login-form">
             <h1 class="text-center mb-4">Iniciar Sesión</h1>
             
@@ -47,41 +92,38 @@
                 </div>
                 
                 <div class="text-center">
-    <button type="submit" class="btn btn-primary">Ingresar</button>
-    <button type="button" class="btn btn-info" onclick="listarUsuarios()">
-        Lista de usuarios
-    </button>
-</div>
+                    <button type="submit" class="btn btn-primary">Ingresar</button>
+                    <button type="button" class="btn btn-info" onclick="listarUsuarios()">
+                        Lista de usuarios
+                    </button>
+                </div>
+            </form> 
 
-</form> 
-
-<div id="listadoUsuarios" class="mt-4" style="display: none;">
-    <h3 class="text-center mb-3">Usuarios</h3>
-    <div class="table-responsive">
-        <table class="table table-striped table-bordered">
-            <thead class="table-dark">
-                <tr>
-                    <th>Usuario</th>
-                    <th>Login</th>
-                    <th>Admin Usuarios</th>
-                    <th>Admin Elastic</th>
-                    <th>Admin Data Elastic</th>
-                </tr>
-            </thead>
-            <tbody id="tbodyUsuarios"></tbody>
-        </table>
-    </div>
-</div>
-
-<div id="div_cargando" class="text-center mt-4" style="display: none;">
-
-</div>
-
-        <div id="div_cargando" class="text-center mt-4" style="display: none;">
-            <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Cargando...</span>
+            <div id="listadoUsuarios" class="mt-4" style="display: none;">
+                <h3 class="text-center mb-3">Usuarios</h3>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Usuario</th>
+                                <th>Login</th>
+                                <th>Admin Usuarios</th>
+                                <th>Admin Elastic</th>
+                                <th>Admin Data Elastic</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyUsuarios"></tbody>
+                    </table>
+                </div>
             </div>
-            <p class="mt-2">Procesando su solicitud...esto puede demorar algunos segundos</p>
+
+            <!-- Spinner de carga (único) -->
+            <div id="div_cargando" class="text-center mt-4" style="display: none;">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                </div>
+                <p class="mt-2">Procesando su solicitud... esto puede demorar algunos segundos</p>
+            </div>
         </div>
     </div>
 
@@ -91,66 +133,71 @@
         <p class="mb-0" id="version_app">{{ version }}</p>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq4cvVmFh9vju3MXgpoK" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq4cvVmFh9vju3MXgpoK"
+            crossorigin="anonymous"></script>
+
     <script>
-function listarUsuarios() {
-    // Mostrar el indicador de carga
-    document.getElementById('div_cargando').style.display = 'block';
+    function listarUsuarios() {
+        // Mostrar el indicador de carga
+        document.getElementById('div_cargando').style.display = 'block';
 
-    fetch('/listar-usuarios')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Estado HTTP ' + response.status);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Respuesta de /listar-usuarios:', data);
+        fetch('/listar-usuarios')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Estado HTTP ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Respuesta de /listar-usuarios:', data);
 
-            const tablaUsuarios = document.getElementById('tbodyUsuarios');
-            const contenedor = document.getElementById('listadoUsuarios');
+                const tablaUsuarios = document.getElementById('tbodyUsuarios');
+                const contenedor = document.getElementById('listadoUsuarios');
 
-            tablaUsuarios.innerHTML = '';
+                tablaUsuarios.innerHTML = '';
 
-            if (!Array.isArray(data) || data.length === 0) {
-                const row = document.createElement('tr');
-                row.innerHTML = '<td colspan="6" class="text-center">No hay usuarios registrados</td>';
-                tablaUsuarios.appendChild(row);
-            } else {
-                data.forEach(usuario => {
+                if (!Array.isArray(data) || data.length === 0) {
                     const row = document.createElement('tr');
-                    const permisos = usuario.permisos || {};
-
-                    const mostrarPermiso = (valor) => {
-                        if (valor === true || valor === 'true') {
-                            return '<span class="badge bg-success">Sí</span>';
-                        } else {
-                            return '<span class="badge bg-secondary">No</span>';
-                        }
-                    };
-
-                    row.innerHTML = `
-                        <td>${usuario.usuario || ''}</td>
-                        
-                        <td>${mostrarPermiso(permisos.login)}</td>
-                        <td>${mostrarPermiso(permisos.admin_usuarios)}</td>
-                        <td>${mostrarPermiso(permisos.admin_elastic)}</td>
-                        <td>${mostrarPermiso(permisos.admin_data_elastic)}</td>
-                    `;
+                    row.innerHTML = '<td colspan="5" class="text-center">No hay usuarios registrados</td>';
                     tablaUsuarios.appendChild(row);
-                });
-            }
+                } else {
+                    data.forEach(usuario => {
+                        const row = document.createElement('tr');
+                        const permisos = usuario.permisos || {};
 
-            document.getElementById('div_cargando').style.display = 'none';
-            contenedor.style.display = 'block';
-        })
-        .catch(error => {
-            console.error('Error en listarUsuarios:', error);
-            alert('Error al obtener la lista de usuarios: ' + error);
-            document.getElementById('div_cargando').style.display = 'none';
-        });
-}
-</script>
+                        const mostrarPermiso = (valor) => {
+                            if (valor === true || valor === 'true') {
+                                return '<span class="badge bg-success">Sí</span>';
+                            } else {
+                                return '<span class="badge bg-secondary">No</span>';
+                            }
+                        };
+
+                        row.innerHTML = `
+                            <td>${usuario.usuario || ''}</td>
+                            <td>${mostrarPermiso(permisos.login)}</td>
+                            <td>${mostrarPermiso(permisos.admin_usuarios)}</td>
+                            <td>${mostrarPermiso(permisos.admin_elastic)}</td>
+                            <td>${mostrarPermiso(permisos.admin_data_elastic)}</td>
+                        `;
+                        tablaUsuarios.appendChild(row);
+                    });
+                }
+
+                document.getElementById('div_cargando').style.display = 'none';
+                contenedor.style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Error en listarUsuarios:', error);
+                alert('Error al obtener la lista de usuarios: ' + error);
+                document.getElementById('div_cargando').style.display = 'none';
+            });
+    }
+
+    // Año en el footer
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
 
 </body>
-</html> 
+</html>
