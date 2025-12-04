@@ -137,11 +137,8 @@ def login():
 def listar_usuarios():
     try:
         usuarios = mongo.listar_usuarios(MONGO_COLECCION)
-
-        # Convertir ObjectId a string para JSON
         for usuario in usuarios:
             usuario['_id'] = str(usuario['_id'])
-
         return jsonify(usuarios)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
