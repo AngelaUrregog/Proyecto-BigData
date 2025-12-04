@@ -3,102 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ingresar - BigData-MiProyecto</title>
+    <title>Ingresar </title>
 
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
           rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
           crossorigin="anonymous">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <!-- Tu CSS general -->
     <link href="{{ url_for('static', filename='css/landingPage.css') }}" rel="stylesheet">
 
-    <!-- Estilos SOLO para esta página (banner morado + padding del contenido) -->
     <style>
+        /* FONDO general solo para esta página */
+        body.login-body {
+            margin: 0;
+            min-height: 100vh;
+            background-image: url('{{ url_for("static", filename="images/bg_bigdata.jpg") }}');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+
         .header {
-            height: 90px;
+            height: 80px;
             display: flex;
             align-items: center;
             background: linear-gradient(90deg, #4b0082 0%, #8b00ff 50%, #ff6bd5 100%);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 20;
-        }
-
-        .header-title {
-            color: #ffffff;
-            font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            font-size: 1.6rem;
-            font-weight: 700;
         }
 
         .header .nav-link {
-            color: #ffffff;
+            color: rgba(255, 255, 255, 0.85);
             font-weight: 500;
-            margin-left: 1rem;
         }
 
-        .header .nav-link.active,
-        .header .nav-link:hover {
-            color: #ffe8ff;
+        .header .nav-link:hover,
+        .header .nav-link.active {
+            color: #ffffff;
         }
 
-        /* Para que el formulario no quede oculto detrás del header fijo */
+        /* Wrapper para centrar el recuadro blanco */
         .login-wrapper {
-            padding-top: 110px;
-            padding-bottom: 40px;
+            min-height: calc(100vh - 80px); /* alto total menos header */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 3rem 1rem;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 650px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 1.5rem;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+        }
+
+        footer {
+            color: #ffffff;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+            padding-bottom: 1rem;
         }
     </style>
 </head>
-<body>
+
+<body class="login-body">
     <!-- Banner morado -->
     <header class="header">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
-                <h1 class="h3 mb-0 header-title">BigData-MiProyecto</h1>
+                <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-database-fill-gear fs-3 text-white"></i>
+                    <div>
+                        <h1 class="h5 mb-0 fw-bold" style="color: white; font-family: 'Poppins', sans-serif;">
+                            Proyecto Final BigData
+                        </h1>
+                        <small class="opacity-75" style="color: white; font-size: 18px; font-family: 'Poppins', sans-serif;">
+                            Ingreso de usuarios
+                        </small>
+                    </div>
+                </div>
                 <nav>
                     <ul class="nav">
-                        <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/about">Acerca de</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/buscador">Buscador</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="/login"><b>Ingresar</b></a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/"><i class="bi bi-house-door"></i> Inicio</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/buscador"><i class="bi bi-search"></i> Buscador</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/about"><i class="bi bi-info-circle"></i> Acerca de</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/login"><i class="bi bi-box-arrow-in-right"></i> Ingresar</a></li>
                     </ul>
                 </nav>
             </div>
         </div>
     </header>
 
-    <!-- Contenido -->
-    <div class="container login-wrapper">
-        <div class="login-form">
-            <h1 class="text-center mb-4">Iniciar Sesión</h1>
-            
+    <!-- Recuadro blanco centrado -->
+    <main class="login-wrapper">
+        <div class="login-card">
+            <h2 class="text-center mb-4">Iniciar Sesión</h2>
+
             {% if error_message %}
             <div class="alert alert-danger" role="alert">
                 {{ error_message }}
             </div>
             {% endif %}
-            
+
             <form method="POST" action="/login" id="loginForm" onsubmit="mostrarCargando()">
                 <div class="mb-3">
                     <label for="usuario" class="form-label">Usuario</label>
                     <input type="text" class="form-control" id="usuario" name="usuario" required>
                 </div>
-                
+
                 <div class="mb-3">
                     <label for="password" class="form-label">Contraseña</label>
                     <input type="password" class="form-control" id="password" name="password" required>
                 </div>
-                
+
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primary">Ingresar</button>
+                    <button type="submit" class="btn btn-primary me-2">Ingresar</button>
                     <button type="button" class="btn btn-info" onclick="listarUsuarios()">
                         Lista de usuarios
                     </button>
                 </div>
-            </form> 
+            </form>
 
+            <!-- Listado de usuarios -->
             <div id="listadoUsuarios" class="mt-4" style="display: none;">
                 <h3 class="text-center mb-3">Usuarios</h3>
                 <div class="table-responsive">
@@ -117,7 +154,7 @@
                 </div>
             </div>
 
-            <!-- Spinner de carga (único) -->
+            <!-- Spinner de carga -->
             <div id="div_cargando" class="text-center mt-4" style="display: none;">
                 <div class="spinner-border text-primary" role="status">
                     <span class="visually-hidden">Cargando...</span>
@@ -125,9 +162,9 @@
                 <p class="mt-2">Procesando su solicitud... esto puede demorar algunos segundos</p>
             </div>
         </div>
-    </div>
+    </main>
 
-    <footer class="text-center">
+    <footer class="text-center mt-4">
         <p class="mb-0">Creado por {{ creador }}</p>
         <p class="mb-0" id="current-year"></p>
         <p class="mb-0" id="version_app">{{ version }}</p>
@@ -138,6 +175,13 @@
             crossorigin="anonymous"></script>
 
     <script>
+    function mostrarCargando() {
+        const div = document.getElementById('div_cargando');
+        if (div) {
+            div.style.display = 'block';
+        }
+    }
+
     function listarUsuarios() {
         // Mostrar el indicador de carga
         document.getElementById('div_cargando').style.display = 'block';
