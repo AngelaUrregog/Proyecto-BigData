@@ -22,7 +22,7 @@ MONGO_COLECCION = os.getenv('MONGO_COLECCION', 'usuario_roles')
 # Configuración ElasticSearch Cloud
 ELASTIC_CLOUD_URL = os.getenv('ELASTIC_CLOUD_URL')
 ELASTIC_API_KEY = os.getenv('ELASTIC_API_KEY')
-ELASTIC_INDEX_DEFAULT = os.getenv('ELASTIC_INDEX_DEFAULT', 'index_cuentos')
+ELASTIC_INDEX_DEFAULT = os.getenv('ELASTIC_INDEX_DEFAULT', 'proy_amug')
 
 # Versión de la aplicación
 VERSION_APP = "1.2.0"
