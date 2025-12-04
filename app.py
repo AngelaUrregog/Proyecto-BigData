@@ -55,41 +55,45 @@ def buscador():
 def buscar_elastic():
     """API para realizar búsqueda en ElasticSearch"""
     try:
-        data = request.get_json()
-        texto_buscar = data.get('texto', '').strip()
-        # Campo enviado desde el frontend. Por defecto buscamos en "texto"
-        campo = data.get('campo', 'texto')
+        data = request.get_json() or {}
+        texto_buscar = (data.get('texto') or '').strip()
 
+        # Si no escribes nada, devuelve los primeros documentos (match_all)
         if not texto_buscar:
-            return jsonify({
-                'success': False,
-                'error': 'Texto de búsqueda es requerido'
-            }), 400
-
-        # Query base
-        query_base = {
-            "query": {
-                "match": {
-                    campo: texto_buscar
+            query_body = {
+                "query": {
+                    "match_all": {}
                 }
             }
-        }
+        else:
+            # Campo donde está el texto completo de tus documentos
+            campo = "texto"   # <-- este es el campo que llenamos al indexar en /cargar-documentos-elastic
 
-        # Ejecutar búsqueda en Elastic
+            query_body = {
+                "query": {
+                    "match": {
+                        campo: texto_buscar
+                    }
+                }
+            }
+
+        # Sin complicarnos con aggregations por ahora
         resultado = elastic.buscar(
             index=ELASTIC_INDEX_DEFAULT,
-            query=query_base,
-            aggs=aggs,
+            query=query_body,
             size=100
         )
 
+        # Devolver tal cual lo que responde el helper
         return jsonify(resultado)
 
     except Exception as e:
+        # Si algo explota, devolvemos JSON de error (para que el front lo entienda)
         return jsonify({
             'success': False,
             'error': str(e)
         }), 500
+
 
 # --------------rutas del buscador en elastic-fin-------------
 # --------------rutas de mongodb (usuarios)-inicio-------------
