@@ -17,30 +17,29 @@
     <!-- BARRA SUPERIOR -->
     <header class="landing-header">
         <div class="landing-header-inner">
-            <!-- Navegación izquierda -->
+            <!-- Título izquierda -->
+            <div class="landing-title">
+                PROYECTO FINAL BIGDATA
+            </div>
+
+            <!-- Navegación derecha -->
             <nav class="landing-nav">
                 <a class="nav-btn" href="/buscador">Buscador</a>
                 <a class="nav-btn" href="/about">Proyecto</a>
                 <a class="nav-btn" href="/login">Ingresar</a>
             </nav>
-
-            <!-- Título hacia la derecha -->
-            <div class="landing-title">
-                PROYECTO FINAL BIGDATA
-            </div>
         </div>
     </header>
 
-    <!-- CONTENIDO PRINCIPAL -->
     <main class="landing-main">
         <div class="landing-content">
             <h1>Bienvenidos al proyecto final de BigData</h1>
 
             <h2>Presentado por Angela Urrego</h2>
-            <h3>Como proyecto de clase</h3>
+            <h3>como proyecto de clase</h3>
 
-            <h3>En la Maestría de Analítica de Datos</h3>
-            <h3>De la Universidad Central</h3>
+            <h3>en la Maestría de Analítica de Datos</h3>
+            <h3>de la Universidad Central</h3>
 
             <div class="landing-meta mt-4">
                 <p class="mb-1">Autor: {{ creador or 'AMUG' }}</p>
@@ -50,9 +49,5 @@
         </div>
     </main>
 
-    <script>
-        // si quieres seguir usando el año dinámico en otras plantillas
-        // aquí no es estrictamente necesario
-    </script>
 </body>
 </html>
