@@ -201,7 +201,7 @@
                     if (indice) {
                         const option = document.createElement('option');
                         option.value = indice.nombre;
-                        option.textContent = `${indice.nombre} (${indice.total_documentos} docs)`;
+                        option.textContent = indice.nombre;
                         select.appendChild(option);
                     } else {
                         select.innerHTML =
