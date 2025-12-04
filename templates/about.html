@@ -3,21 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acerca de </title>
+    <title>Acerca de</title>
 
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Tu CSS general -->
     <link href="{{ url_for('static', filename='css/landingPage.css') }}" rel="stylesheet">
 
     <style>
-
+        /* FONDO GENERAL DE ESTA PÁGINA */
         body.about-body {
             margin: 0;
             min-height: 100vh;
-            background-image: url("{{ url_for('static', filename='Images/big-data-1086802_1280.jpg') }}");
+            background-image: url('{{ url_for("static", filename="images/big-data-1086802_1280.jpg") }}');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
+            background-repeat: no-repeat;
         }
 
         /* Banner morado */
@@ -27,13 +31,6 @@
             align-items: center;
             background: linear-gradient(90deg, #4b0082 0%, #8b00ff 50%, #ff6bd5 100%);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-        }
-
-        .header .navbar-brand {
-            font-weight: 700;
-            color: #ffffff;
-            font-size: 1.4rem;
-            text-decoration: none;
         }
 
         .header .nav-link {
@@ -88,21 +85,30 @@
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center gap-2">
-                    <i class="bi bi-database-fill-gear fs-3"></i>
-                <div>
-                    <h1 class="h5 mb-0 fw-bold" style="color: white; font-family: 'Poppins', sans-serif;">
-                     Proyecto Final BigData
-                    </h1> <small class="opacity-75" style="color: white; font-size: 18px; font-family: 'Poppins', sans-serif;">
-                        Acerca de:
-                    </small>
-                </div>
+                    <i class="bi bi-database-fill-gear fs-3 text-white"></i>
+                    <div>
+                        <h1 class="h5 mb-0 fw-bold" style="color: white; font-family: 'Poppins', sans-serif;">
+                            Proyecto Final BigData
+                        </h1>
+                        <small class="opacity-75" style="color: white; font-size: 18px; font-family: 'Poppins', sans-serif;">
+                            Acerca de
+                        </small>
+                    </div>
                 </div>
                 <nav>
                     <ul class="nav">
-                        <li class="nav-item"><a class="nav-link" href="/"><i class="bi bi-house-door"></i> Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="/buscador"><i class="bi bi-search"></i> Buscador</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/about"><i class="bi bi-info-circle"></i> Acerca de</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/login"><i class="bi bi-box-arrow-in-right"></i> Ingresar</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/"><i class="bi bi-house-door"></i> Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/buscador"><i class="bi bi-search"></i> Buscador</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/about"><i class="bi bi-info-circle"></i> Acerca de</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login"><i class="bi bi-box-arrow-in-right"></i> Ingresar</a>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -112,21 +118,22 @@
     <!-- Recuadro blanco centrado -->
     <main class="about-wrapper">
         <div class="about-card">
-            <h1 class="mb-3 fw-bold">BigData-MiProyecto</h1>
             <h3 class="mb-4" style="color:#6c2ad4;">Proyecto</h3>
 
             <p class="mb-3">
-                Este proyecto es una aplicación web de búsqueda y gestion de usuarios, desarrollada como trabajo final de la matria Big Data.
-                Integra MongoDB y Elasticsearch para almacenar, indexar y consultar grandes volúmenes de documentos, además de gestionar usuarios y sus credenciales dentro de la plataforma.
-                Permite cargar datos desde archivos o web scraping y explorarlos mediante un buscador especializado. 
-                Su objetivo es mostrar, de forma práctica, cómo las tecnologías de Big Data pueden apoyar procesos reales de consulta y toma de decisiones.
+                Este proyecto es una aplicación web de búsqueda y gestión de usuarios, desarrollada como trabajo final
+                de la materia Big Data. Integra MongoDB y Elasticsearch para almacenar, indexar y consultar grandes
+                volúmenes de documentos, además de administrar usuarios y sus permisos dentro de la plataforma.
+                Permite cargar datos desde archivos ZIP o mediante web scraping y explorarlos a través de un buscador
+                especializado. Su objetivo es demostrar, de forma práctica, cómo las tecnologías de Big Data pueden
+                apoyar procesos reales de consulta y toma de decisiones.
             </p>
 
             <!-- Avatar -->
             <img src="{{ url_for('static', filename='images/myAvatar.png') }}"
                  alt="Foto del creador" class="profile-img">
 
-            <h4 class="mb-1">Angela Urrego Gomez</h4>
+            <h4 class="mb-1">Angela Urrego Gómez</h4>
             <p class="mb-0">Estudiante de Maestría en Analítica de Datos</p>
             <p class="mb-3">Universidad Central</p>
 
