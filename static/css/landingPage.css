@@ -16,39 +16,22 @@
 }
 
 /* ===== BARRA SUPERIOR ===== */
-.header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
 
+.landing-header {
     height: 120px;
-    padding: 0 2rem;
-
     display: flex;
     align-items: center;
-
+    /* Degradado morado */
     background: linear-gradient(90deg, #4b0082 0%, #8b00ff 50%, #ff6bd5 100%);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-    z-index: 20;
 }
 
-/* Estilo del título del header */
-.header-title {
-    color: #ffffff;
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.6rem; /* un poco más grande */
-}
-
-/* Navegación del header */
-.header .nav-link {
-    color: #ffffff;
-    font-weight: 500;
-    margin-left: 1rem;
-}
-
-.header .nav-link:hover {
-    color: #ffe8ff;
+.landing-header-inner {
+    width: 100%;
+    padding: 0 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 /* Navegación izquierda */
