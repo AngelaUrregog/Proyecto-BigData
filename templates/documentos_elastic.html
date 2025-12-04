@@ -193,20 +193,28 @@
                 .then(data => {
                     const select = document.getElementById('select_index');
                     select.innerHTML = '';
+                    const MI_INDEX = 'proy_amug';
 
-                    const MI_INDEX = 'proy_amug'; 
-                    const indice = data.find(i => i.index === MI_INDEX);
+
+                    const indice = data.find(i => i.nombre === MI_INDEX);
 
                     if (indice) {
                         const option = document.createElement('option');
-                        option.value = indice.index;
-                        option.textContent = `${indice.index} (${indice.total_documentos} docs)`;
+                        option.value = indice.nombre;
+                        option.textContent = `${indice.nombre} (${indice.total_documentos} docs)`;
                         select.appendChild(option);
                     } else {
-        
-        select.innerHTML = '<option value="">No se encontró el índice configurado</option>';
-    }
-})
+                        select.innerHTML =
+                            '<option value="">No se encontró el índice configurado</option>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al cargar índices:', error);
+                    const select = document.getElementById('select_index');
+                    select.innerHTML =
+                        '<option value="">Error al cargar índices</option>';
+                });
+        }
 
         // Procesar archivo ZIP
         function procesarZip() {
